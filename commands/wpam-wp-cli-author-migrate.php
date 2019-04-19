@@ -12,7 +12,7 @@ if ( ! class_exists( 'WPAM_WP_CLI_Author_Migrate' ) ) {
 		 * <author_map>
 		 * : A file or URL of an author output file. This output file should be the JSON output from wp user list.
 		 *
-		 * [--default-author=<default_author>]
+		 * [--default-author=<default-author>]
 		 * : The ID, username or email of the default user to map posts to. Defaults to the site admin.
 		 *
 		 * [--set-default=<set-default>]

@@ -1,28 +1,21 @@
-=== WP Author Migration ===
-Contributors: ucfwebcom
-Requires at least: 4.9.7
-Tested up to: 4.9.7
-Stable tag: 0.0.0
-Requires PHP: 5.4
-License: GPLv3 or later
-License URI: http://www.gnu.org/copyleft/gpl-3.0.html
+# WP Author Migration #
 
 Set of utilities for migrating authors from one site to another and remapping posts with the appropriate author IDs.
 
 
-== Description ==
+## Description ##
 
 The WP Author Migration tool provides a set of wp-cli and GUI utilities for matching authors exported from one system and imported into another using the [All-in-One WP Migration plugin](https://wordpress.org/plugins/all-in-one-wp-migration/).
 
-=== The Challenge ===
+# The Challenge #
 
 When importing a site using the All-in-One WP Migration plugin, it is common for author IDs to be updated, especially when migrating a single site into a multisite environment. While the user accounts are imported, the IDs will no longer match the `author_id` set on each post, causing the posts to be mapped to the wrong authors or no author at all.
 
-=== Our Solution ===
+# Our Solution #
 
 This plugin provides tools for exporting author data to a JSON file, and then using that file to create a mapping between authors on the old site and the new. That author map is then used to update the posts on the new site to point to the correct authors.
 
-=== Basic Usage ===
+# Basic Usage #
 
 The basic usage of the command is as follows:
 
@@ -32,32 +25,32 @@ wp wpam migrate <path-or-url-to-file> [--default-author=<ID,username,email>] [--
 
 More detailed information on the parameters can be found [on the WP Author Migration wiki](https://github.com/UCF/WP-Author-Migration/wiki#running-the-command).
 
-== Documentation ==
+## Documentation ##
 
 Head over to the [WP Author Migration wiki](https://github.com/UCF/WP-Author-Migration/wiki) for detailed information about this plugin, installation instructions, and more.
 
 
-== Changelog ==
+## Changelog ##
 
-= 1.0.0 =
+### 1.0.0 ###
 * Initial release
 
 
-== Upgrade Notice ==
+## Upgrade Notice ##
 
 n/a
 
 
-== Development ==
+## Development ##
 
 [Enabling debug mode](https://codex.wordpress.org/Debugging_in_WordPress) in your `wp-config.php` file is recommended during development to help catch warnings and bugs.
 
-= Requirements =
+### Requirements ###
 * node
 * gulp-cli
 * wp-cli
 
-= Instructions =
+### Instructions ###
 1. Clone the WP-Author-Migration repo into your local development environment, within your WordPress installation's `plugins/` directory: `git clone https://github.com/UCF/WP-Author-Migration.git`
 2. `cd` into the new WP-Author-Migration directory, and run `npm install` to install required packages for development into `node_modules/` within the repo
 3. Optional: If you'd like to enable [BrowserSync](https://browsersync.io) for local development, or make other changes to this project's default gulp configuration, copy `gulp-config.template.json`, make any desired changes, and save as `gulp-config.json`.
@@ -69,10 +62,10 @@ n/a
 4. If you haven't already done so, create a new WordPress site on your development environment to test this plugin against.
 5. Activate this plugin on your development WordPress site.
 
-= Other Notes =
+### Other Notes ###
 * This plugin's README.md file is automatically generated. Please only make modifications to the README.txt file, and make sure the `gulp readme` command has been run before committing README changes.  See the [contributing guidelines](https://github.com/UCF/WP-Author-Migration/blob/master/CONTRIBUTING.md) for more information.
 
 
-== Contributing ==
+## Contributing ##
 
 Want to submit a bug report or feature request?  Check out our [contributing guidelines](https://github.com/UCF/WP-Author-Migration/blob/master/CONTRIBUTING.md) for more information.  We'd love to hear from you!
