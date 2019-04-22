@@ -42,6 +42,8 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 			$this->set_default_author = $set_default;
 			$this->post_types = array_map( 'trim', explode( ',', $post_type ) );
 
+			$this->verify_post_types();
+
 			if ( $this->set_default_author ) {
 				$this->default_author = $this->get_default_author( $default_user );
 			}
@@ -128,6 +130,44 @@ Unable to Update : $this->cannot_update
 
 			return $retval;
 
+		}
+
+		/**
+		 * Helper function that verifies that the
+		 * provided post types exist.
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 */
+		private function verify_post_types() {
+			$invalid = array();
+			$throw = false;
+
+			foreach( $this->post_types as $post_type ) {
+				if ( ! post_type_exists( $post_type ) ) {
+					$invalid[] = $post_type;
+					$throw = true;
+				}
+			}
+
+			if ( $throw ) {
+				$message = '';
+
+				if ( count( $invalid ) > 1 ) {
+					$post_types = "\"" . implode( "\", \"", array_slice( $invalid, 0, -1 ) ) . "\" and \"" . end( $invalid ) . "\"";
+
+					$message = "
+The post types $post_types are not valid post types
+on this WordPress instance.
+					";
+				} else {
+					$message = "
+The post type \"$invalid[0]\" is not a valid post type
+on this WordPress instance.
+					";
+				}
+
+				throw new Exception( $message );
+			}
 		}
 
 		/**
