@@ -18,6 +18,9 @@ if ( ! class_exists( 'WPAM_WP_CLI_Author_Migrate' ) ) {
 		 * [--set-default=<set-default>]
 		 * : Whether a default author should be set.
 		 *
+		 * [--post-type=<post_type>]
+		 * : The post types to convert. Can be a single post-type or multiple, comma-separated.
+		 *
 		 * ## Examples
 		 *
 		 * 	# Migrate using a remote author file.
@@ -27,13 +30,16 @@ if ( ! class_exists( 'WPAM_WP_CLI_Author_Migrate' ) ) {
 		 * 	wp wpam migrate ~/users.json
 		 *
 		 * 	# Migrate using a remote author file and set the default author to the user with an ID of 4.
-		 * 	wp wpam migrate https://example.com/users.json --default_author=4
+		 * 	wp wpam migrate https://example.com/users.json --default-author=4
 		 *
 		 * 	# Migrate using a remote author file and set the default author to the user with a username of "john".
-		 * 	wp wpam migrate https://example.com/users.json --default_author=john
+		 * 	wp wpam migrate https://example.com/users.json --default-author=john
 		 *
 		 * 	# Migrate using a remote author file and set the default author to the user with an email address of "john@example.com".
-		 * 	wp wpam migrate https://example.com/users.json --default_author=john@example.com
+		 * 	wp wpam migrate https://example.com/users.json --default-author=john@example.com
+		 *
+		 * # Migrate using a remote author file, set the default author to the user with an ID of 4 and process post types of `post` and `externalstory`.
+		 * wp wpam migrate https://example.com/users.json --default-author=4 --post-type=post,externalstory
 		 */
 		public function __invoke( $args, $assoc_args ) {
 			list( $author_map ) = $args;
@@ -47,8 +53,12 @@ if ( ! class_exists( 'WPAM_WP_CLI_Author_Migrate' ) ) {
 				? filter_var( $assoc_args['set-default'], FILTER_VALIDATE_BOOLEAN )
 				: true;
 
+			$post_types = isset( $assoc_args['post-type'] )
+				? $assoc_args['post-type']
+				: 'post';
+
 			try {
-				$cmd = new WPAM_Author_Migrate( $author_map, $default_author, $set_default );
+				$cmd = new WPAM_Author_Migrate( $author_map, $default_author, $set_default, $post_types );
 				$cmd->migrate();
 
 				WP_CLI::Success( $cmd->get_stats() );

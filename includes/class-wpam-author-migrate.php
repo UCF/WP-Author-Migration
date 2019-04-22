@@ -11,6 +11,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		public
 			$set_default_author, // Boolean that indicates if default author should be set.
 			$default_author,     // Default author object
+			$post_types,         // The post types to process
 			$all_authors,        // All authors encountered on new system
 			$authors,            // An array of authors
 			$unmapped_authors,   // Users with no local mapping
@@ -26,7 +27,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		 * @param string $file_path The file path of the user export
 		 * @param mixed $default_user the username or ID of the default user.
 		 */
-		public function __construct( $file_path, $default_user=1, $set_default=True ) {
+		public function __construct( $file_path, $default_user=1, $set_default=True, $post_type='post' ) {
 			// Create empty arrays on author arrays
 			$this->all_authors      = array();
 			$this->authors          = array();
@@ -39,6 +40,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 			$this->cannot_update = 0;
 
 			$this->set_default_author = $set_default;
+			$this->post_types = array_map( 'trim', explode( ',', $post_type ) );
 
 			if ( $this->set_default_author ) {
 				$this->default_author = $this->get_default_author( $default_user );
@@ -71,7 +73,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		 */
 		public function migrate() {
 			$query = new WP_Query( array(
-				'post_type'      => 'post',
+				'post_type'      => $this->post_types,
 				'posts_per_page' => -1
 			) );
 
