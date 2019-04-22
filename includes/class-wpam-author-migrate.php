@@ -142,7 +142,7 @@ Unable to Update : $this->cannot_update
 			$invalid = array();
 			$throw = false;
 
-			// Short curcuit if the only parameter is 'all'
+			// Short curcuit if the only parameter is 'any'
 			if ( count( $this->post_types ) === 1 && $this->post_types[0] === 'any' ) {
 				return;
 			} else if ( in_array( 'any', $this->post_types ) ) {
