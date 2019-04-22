@@ -257,7 +257,7 @@ Alternatively, you can set no default user using --set-default=false
 
 			global $wpdb;
 
-			// If the author
+			// If the author needs to be updated run through the update process
 			if ( $author->needs_update && $current_author !== $author->new_id ) {
 				$update_status = $wpdb->update( $wpdb->posts, array( 'post_author' => $author->new_id ), array( 'ID' => $post->ID ) );
 
