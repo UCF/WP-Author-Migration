@@ -45,6 +45,11 @@ if ( ! class_exists( 'WPAM_Author' ) ) {
 
 			$user = get_user_by( 'id', $this->old_id );
 
+			if ( $user ) {
+				$this->new_id = $user->ID;
+				return true;
+			}
+
 			$user = get_user_by( 'login', $this->user_login );
 
 			if ( $user ) {
