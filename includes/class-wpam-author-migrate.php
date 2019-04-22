@@ -27,7 +27,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		 * @param string $file_path The file path of the user export
 		 * @param mixed $default_user the username or ID of the default user.
 		 */
-		public function __construct( $file_path, $default_user=1, $set_default=True, $post_type='post' ) {
+		public function __construct( $file_path, $default_user=1, $set_default=True, $post_type='any' ) {
 			// Create empty arrays on author arrays
 			$this->all_authors      = array();
 			$this->authors          = array();
@@ -141,6 +141,17 @@ Unable to Update : $this->cannot_update
 		private function verify_post_types() {
 			$invalid = array();
 			$throw = false;
+
+			// Short curcuit if the only parameter is 'all'
+			if ( count( $this->post_types ) === 1 && $this->post_types[0] === 'any' ) {
+				return;
+			} else if ( in_array( 'any', $this->post_types ) ) {
+				// If we get here, there are multiple post_types defined
+				// but the `any` keyword is present.
+				// Update $this->post_types to be a single string.
+				$this->post_types = 'any';
+				return;
+			}
 
 			foreach( $this->post_types as $post_type ) {
 				if ( ! post_type_exists( $post_type ) ) {

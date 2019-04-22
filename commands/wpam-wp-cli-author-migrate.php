@@ -55,7 +55,7 @@ if ( ! class_exists( 'WPAM_WP_CLI_Author_Migrate' ) ) {
 
 			$post_types = isset( $assoc_args['post-type'] )
 				? $assoc_args['post-type']
-				: 'post';
+				: 'any';
 
 			try {
 				$cmd = new WPAM_Author_Migrate( $author_map, $default_author, $set_default, $post_types );
