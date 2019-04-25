@@ -11,6 +11,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		public
 			$set_default_author, // Boolean that indicates if default author should be set.
 			$default_author,     // Default author object
+			$post_types,         // The post types to process
 			$all_authors,        // All authors encountered on new system
 			$authors,            // An array of authors
 			$unmapped_authors,   // Users with no local mapping
@@ -26,7 +27,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		 * @param string $file_path The file path of the user export
 		 * @param mixed $default_user the username or ID of the default user.
 		 */
-		public function __construct( $file_path, $default_user=1, $set_default=True ) {
+		public function __construct( $file_path, $default_user=1, $set_default=True, $post_type='any' ) {
 			// Create empty arrays on author arrays
 			$this->all_authors      = array();
 			$this->authors          = array();
@@ -39,6 +40,9 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 			$this->cannot_update = 0;
 
 			$this->set_default_author = $set_default;
+			$this->post_types = array_map( 'trim', explode( ',', $post_type ) );
+
+			$this->verify_post_types();
 
 			if ( $this->set_default_author ) {
 				$this->default_author = $this->get_default_author( $default_user );
@@ -71,7 +75,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 		 */
 		public function migrate() {
 			$query = new WP_Query( array(
-				'post_type'      => 'post',
+				'post_type'      => $this->post_types,
 				'posts_per_page' => -1
 			) );
 
@@ -126,6 +130,55 @@ Unable to Update : $this->cannot_update
 
 			return $retval;
 
+		}
+
+		/**
+		 * Helper function that verifies that the
+		 * provided post types exist.
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 */
+		private function verify_post_types() {
+			$invalid = array();
+			$throw = false;
+
+			// Short curcuit if the only parameter is 'any'
+			if ( count( $this->post_types ) === 1 && $this->post_types[0] === 'any' ) {
+				return;
+			} else if ( in_array( 'any', $this->post_types ) ) {
+				// If we get here, there are multiple post_types defined
+				// but the `any` keyword is present.
+				// Update $this->post_types to be a single string.
+				$this->post_types = 'any';
+				return;
+			}
+
+			foreach( $this->post_types as $post_type ) {
+				if ( ! post_type_exists( $post_type ) ) {
+					$invalid[] = $post_type;
+					$throw = true;
+				}
+			}
+
+			if ( $throw ) {
+				$message = '';
+
+				if ( count( $invalid ) > 1 ) {
+					$post_types = "\"" . implode( "\", \"", array_slice( $invalid, 0, -1 ) ) . "\" and \"" . end( $invalid ) . "\"";
+
+					$message = "
+The post types $post_types are not valid post types
+on this WordPress instance.
+					";
+				} else {
+					$message = "
+The post type \"$invalid[0]\" is not a valid post type
+on this WordPress instance.
+					";
+				}
+
+				throw new Exception( $message );
+			}
 		}
 
 		/**
