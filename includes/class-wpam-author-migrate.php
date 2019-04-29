@@ -291,8 +291,8 @@ Alternatively, you can set no default user using --set-default=false
 			// Get the current post author
 			$current_author = (int)$post->post_author;
 
-			if ( ! isset( $this->all_authors[$current_author] ) ) {
-				$this->all_authors[$current_author] = $current_author;
+			if ( ! isset( $this->all_authors[$current_author] ) && isset( $this->authors[$current_author] ) ) {
+				$this->all_authors[$current_author] = $this->authors[$current_author];
 			}
 
 			$author = isset( $this->authors[$current_author] )
