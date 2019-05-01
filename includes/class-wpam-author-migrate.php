@@ -201,7 +201,7 @@ on this WordPress instance.
 
 			if ( $user ) {
 				$user_data = (object)array(
-					'old_id'       => $user->ID,
+					'ID'           => $user->ID,
 					'user_login'   => $user->user_login,
 					'display_name' => $user->display_name,
 					'user_email'   => $user->user_email
