@@ -299,7 +299,7 @@ Alternatively, you can set no default user using --set-default=false
 				? $this->authors[$current_author]
 				: null;
 
-			if ( ! $author ) {
+			if ( $author === null ) {
 				if ( $this->set_default_author ) {
 					$author = $this->default_author;
 				} else {
