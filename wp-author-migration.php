@@ -12,6 +12,8 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
+define( 'WPAM_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
 require_once dirname( __FILE__ ) . '/includes/class-wpam-author-migrate.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {

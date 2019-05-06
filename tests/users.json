@@ -1,0 +1,10 @@
+[
+    {
+        "ID":2,
+        "user_login":"specialtestuser",
+        "display_name":"Special Test User",
+        "user_email":"specialtestuser@test.com",
+        "user_registered":"2018-05-01 14:58:18",
+        "roles":"administrator"
+    }
+]
