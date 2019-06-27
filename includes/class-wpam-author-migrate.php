@@ -54,7 +54,7 @@ if ( ! class_exists( 'WPAM_Author_Migrate' ) ) {
 			if ( preg_match( "/^(http\:\/\/|https\:\/\/)/", $file_path ) ) {
 				$file_data = $this->get_remote_file( $file_path );
 			} else {
-				$file_data = file_get_contents( $file_path );
+				$file_data = $this->get_local_file( $file_path );
 			}
 
 			$user_data = json_decode( $file_data );
@@ -250,7 +250,11 @@ Alternatively, you can set no default user using --set-default=false
 		}
 
 		private function get_local_file( $file_path ) {
-			$retval = file_get_contents( $file_path );
+			$retval = false;
+
+			if ( is_file( $file_path ) ) {
+				$retval = file_get_contents( $file_path );
+			}
 
 			if ( $retval === false ) {
 				throw new Exception(
