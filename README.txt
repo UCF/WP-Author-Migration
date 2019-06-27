@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 4.9.7
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -38,6 +38,10 @@ Head over to the [WP Author Migration wiki](https://github.com/UCF/WP-Author-Mig
 
 
 == Changelog ==
+
+= 1.0.1 =
+Enhancements:
+* Updated a direct `file_get_contents()` call in `WPAM_Author_Migrate`'s constructor to use the unused `get_local_file()` method, which has been updated to verify that the provided path is a valid file on the system.
 
 = 1.0.0 =
 * Initial release

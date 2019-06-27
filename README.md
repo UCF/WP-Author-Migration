@@ -32,6 +32,10 @@ Head over to the [WP Author Migration wiki](https://github.com/UCF/WP-Author-Mig
 
 ## Changelog ##
 
+### 1.0.1 ###
+Enhancements:
+* Updated a direct `file_get_contents()` call in `WPAM_Author_Migrate`'s constructor to use the unused `get_local_file()` method, which has been updated to verify that the provided path is a valid file on the system.
+
 ### 1.0.0 ###
 * Initial release
 
