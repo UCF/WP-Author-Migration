@@ -120,7 +120,7 @@ Adhering to the following process is the best way to submit a pull request:
 
 In general, we keep conversations about distributed UCF WordPress projects on the [UCFTeam-CAMPUS-Wordpress Team](https://teams.microsoft.com/l/channel/19%3acf4fa1fd7b1042949ecd1acf5413aa22%40thread.skype/General?groupId=5e3e72e2-3599-47b3-bcfc-bb3d5b579f12&tenantId=bb932f15-ef38-42ba-91fc-f3c59d5dd1f1).  This workspace is owned and managed by UCF Web Communications (Webcom).  You'll need a **@ucf.edu** email address to join.
 
-Whenever you post a question in this Team, please include your **job title**, information about the **college or department** you work for, as well as the **site(s) you need help with** will help us help you more effectively.
+Whenever you post a question in this Team, please include your **job title**, information about the **college or department** you work for, as well as the **site(s) you need help with** to help us help you more effectively.
 
 ### General questions
 If you have a general question about the plugin, design decisions, or any other question that isn't a help request, please submit an [issue on GitHub](https://github.com/UCF/WP-Author-Migration/issues) with a title beginning with "Question: " so we can quickly assign it the appropriately label.
